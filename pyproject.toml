@@ -1,0 +1,30 @@
+[project]
+name = "sparse-attn"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "flash-linear-attention>=0.5.0",
+    "infllm-v2",
+    "jedi<0.18.0",
+    "sglang[all]",
+    "sparse-kernel-extension",
+    "tilelang>=0.1.9",
+]
+
+[tool.uv.workspace]
+members = [
+    "sglang/python",
+    "infllmv2_cuda_impl",
+    "sparse_kernel",
+]
+
+[tool.uv.sources]
+infllm-v2 = { workspace = true }
+sparse-kernel-extension = { workspace = true }
+sglang = { workspace = true, editable = true }
+
+[tool.uv.extra-build-dependencies]
+infllm-v2 = ["torch", "setuptools"]
+sparse-kernel-extension = ["torch", "setuptools"]
