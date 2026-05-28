@@ -11,3 +11,11 @@ run sglang server
 ```bash
 bash launch_server.sh
 ```
+
+---
+
+bugs
+
+CUDA kernel image: fix setup.py to include sm120
+
+no SGLang implementation and Transformers implementation is not compatible: reinstall

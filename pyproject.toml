@@ -8,23 +8,47 @@ dependencies = [
     "flash-linear-attention>=0.5.0",
     "infllm-v2",
     "jedi<0.18.0",
+    "nltk>=3.9.4",
+    "nvidia-nccl-cu13>=2.28.9",
+    "nvidia-nvshmem-cu13>=3.4.5",
+    "pyarrow~=18.0.0",
+    "sgl-deep-gemm==0.1.0",
     "sglang[all]",
     "sparse-kernel-extension",
-    "tilelang>=0.1.9",
+    "tenacity>=9.1.4",
+    "tilelang==0.1.8",
+    "torch~=2.11.0",
+    "wonderwords>=3.0.1",
 ]
 
 [tool.uv.workspace]
 members = [
     "sglang/python",
-    "infllmv2_cuda_impl",
-    "sparse_kernel",
+    "sglang/3rdparty/infllmv2_cuda_impl",
+    "sglang/3rdparty/sparse_kernel",
 ]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
 
 [tool.uv.sources]
 infllm-v2 = { workspace = true }
 sparse-kernel-extension = { workspace = true }
 sglang = { workspace = true, editable = true }
+torch = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64' " },
+  { index = "pytorch-cpu", marker = "sys_platform == 'linux' and platform_machine != 'x86_64' " }, # ascend
+]
+torchvision = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64' " },
+  { index = "pytorch-cpu", marker = "sys_platform == 'linux' and platform_machine != 'x86_64' " },
+]
 
-[tool.uv.extra-build-dependencies]
-infllm-v2 = ["torch", "setuptools"]
-sparse-kernel-extension = ["torch", "setuptools"]
