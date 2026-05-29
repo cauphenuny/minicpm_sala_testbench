@@ -18,10 +18,11 @@ uv run -m sglang.launch_server \
     --model $model_path \
     --trust-remote-code \
     --disable-radix-cache \
-    --attention-backend minicpm_flashattn \
+    --attention-backend minicpm_flashinfer \
     --chunked-prefill-size 8192 \
     --max-running-requests 1 \
     --max-prefill-tokens 20480 \
     --skip-server-warmup \
     --disable-piecewise-cuda-graph \
-    --port 30000
+    --port 30000 \
+    $@
