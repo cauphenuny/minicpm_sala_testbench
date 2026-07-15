@@ -1,12 +1,13 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source $SCRIPT_DIR/meta.sh
 
-# uv run -m sglang.launch_server \
+# uv run --no-sync -m sglang.launch_server \
 #     --model $model_path \
 #     --trust-remote-code   \
 #     --disable-radix-cache \
 #     --attention-backend minicpm_flashinfer \
 #     --chunked-prefill-size 8192 \
+#     --max-prefill-tokens 20480 \
 #     --max-running-requests 1 \
 #     --skip-server-warmup \
 #     --split-stage1 \
@@ -14,14 +15,13 @@ source $SCRIPT_DIR/meta.sh
 #     --port 30000
 
 
-uv run -m sglang.launch_server \
+uv run --no-sync -m sglang.launch_server \
     --model $model_path \
     --trust-remote-code \
     --disable-radix-cache \
     --attention-backend minicpm_flashinfer \
-    --chunked-prefill-size 8192 \
+    --chunked-prefill-size 4096 \
     --max-running-requests 1 \
-    --max-prefill-tokens 20480 \
     --skip-server-warmup \
     --disable-piecewise-cuda-graph \
     --port 30000 \

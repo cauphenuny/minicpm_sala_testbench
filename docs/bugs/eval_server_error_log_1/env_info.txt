@@ -1,0 +1,34 @@
+=== Environment Info ===
+Python: 3.10.20 (conda-forge)
+PyTorch: 2.11.0+cu130
+CUDA (torch): 13.0
+CUDA (nvcc): 12.9 V12.9.41
+cuDNN: 91900
+GPU: NVIDIA H20-3e
+SGLang branch: minicpm_sala (4 commits on top of main)
+Model: /share-evpfs/tj/models/MiniCPM-SALA
+
+=== Relevant Commits ===
+204556e8f chore(minicpm-sala): add build docs and helper scripts
+35287d15a feat(minicpm-sala): add MiniCPM sparse attention support
+986ce54b1 feat(jit_kernel): add minicpm_sala get_block_table kernel
+54751bda9 feat(sgl-kernel): add InfLLM v2 attention kernels
+
+=== SGLang Server Launch Command ===
+CUDA_VISIBLE_DEVICES=1 http_proxy="" https_proxy="" no_proxy="127.0.0.1,localhost" \
+python -m sglang.launch_server \
+  --model-path /share-evpfs/tj/models/MiniCPM-SALA \
+  --attention-backend minicpm_flashattn \
+  --trust-remote-code --port 30000
+
+=== Model Config (sparse_config) ===
+"sparse_config": {
+    "kernel_size": 32,
+    "kernel_stride": 16,
+    "init_blocks": 1,
+    "block_size": 64,
+    "window_size": 2048,
+    "topk": 64,
+    "use_nope": false,
+    "dense_len": 8192
+}
